@@ -31,14 +31,10 @@ from helper import little_endian_to_int
 bits = bytes.fromhex('e93c0118')
 exponent = bits[-1]
 coefficient = little_endian_to_int(bits[:-1])
-target = coefficient*2**(8*(exponent-3))
+target = coefficient * 256**(exponent - 3)
 
-bits_min = bytes.fromhex('ffff001d')
-exponent_min = bits_min[-1]
-coefficient_min = little_endian_to_int(bits_min[:-1])
-min = coefficient_min*2**(8*(exponent_min-3))
-
-difficulty = min // target
+min_target = 0xffff * 256**(0x1d - 3)
+difficulty = min_target // target
 print(difficulty)
 ```
 
@@ -63,7 +59,7 @@ where \\(min = 0xffff\cdot256^{(0x1d-3)}\\)
 
 
 ```python
-from helper import little_endian_to_int
+# Exercise 6.1
 
 hex_bits = 'f2881718'
 
@@ -73,10 +69,8 @@ hex_bits = 'f2881718'
 # plug into formula coefficient * 256^(exponent-3) to get the target
 # print target using print('{:x}'.format(target).zfill(64))
 
-hex_min_bits = 'ffff001d'
-# do the same for the min_bits for min target
-
-# difficulty is min target / target
+# difficulty formula is 0xffff * 256**(0x1d - 3) / target
+# print the difficulty
 ```
 
 ### Test Driven Exercise
